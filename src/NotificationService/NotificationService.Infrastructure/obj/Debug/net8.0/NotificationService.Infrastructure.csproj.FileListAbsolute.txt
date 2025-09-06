@@ -1,0 +1,11 @@
+C:\Users\azatc\source\repos\ShopScanner\src\NotificationService\NotificationService.Infrastructure\bin\Debug\net8.0\NotificationService.Infrastructure.deps.json
+C:\Users\azatc\source\repos\ShopScanner\src\NotificationService\NotificationService.Infrastructure\bin\Debug\net8.0\NotificationService.Infrastructure.dll
+C:\Users\azatc\source\repos\ShopScanner\src\NotificationService\NotificationService.Infrastructure\bin\Debug\net8.0\NotificationService.Infrastructure.pdb
+C:\Users\azatc\source\repos\ShopScanner\src\NotificationService\NotificationService.Infrastructure\obj\Debug\net8.0\NotificationService.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\azatc\source\repos\ShopScanner\src\NotificationService\NotificationService.Infrastructure\obj\Debug\net8.0\NotificationService.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\azatc\source\repos\ShopScanner\src\NotificationService\NotificationService.Infrastructure\obj\Debug\net8.0\NotificationService.Infrastructure.AssemblyInfo.cs
+C:\Users\azatc\source\repos\ShopScanner\src\NotificationService\NotificationService.Infrastructure\obj\Debug\net8.0\NotificationService.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\azatc\source\repos\ShopScanner\src\NotificationService\NotificationService.Infrastructure\obj\Debug\net8.0\NotificationService.Infrastructure.dll
+C:\Users\azatc\source\repos\ShopScanner\src\NotificationService\NotificationService.Infrastructure\obj\Debug\net8.0\refint\NotificationService.Infrastructure.dll
+C:\Users\azatc\source\repos\ShopScanner\src\NotificationService\NotificationService.Infrastructure\obj\Debug\net8.0\NotificationService.Infrastructure.pdb
+C:\Users\azatc\source\repos\ShopScanner\src\NotificationService\NotificationService.Infrastructure\obj\Debug\net8.0\ref\NotificationService.Infrastructure.dll
