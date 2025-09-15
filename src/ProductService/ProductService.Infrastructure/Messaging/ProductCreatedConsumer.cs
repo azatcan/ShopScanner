@@ -54,13 +54,13 @@ namespace ProductService.Infrastructure.Messaging
                         Name = productDto.Name,
                         Price = productDto.Price,
                         Url = productDto.Url,
-                        ImageUrl = string.IsNullOrWhiteSpace(productDto.ImageUrl) ? "/images/default.png" : productDto.ImageUrl,
+                        ImageUrl = productDto.ImageUrl, 
                         CategoryId = productDto.CategoryId,
                         Source = productDto.SourceName,
                         CreatedAt = productDto.ScrapedAt
                     };
 
-                    await service.AddProductAsync(product);
+                    await service.AddOrUpdateProductAsync(product);
                 }
             };
 

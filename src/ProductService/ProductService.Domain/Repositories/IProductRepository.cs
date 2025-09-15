@@ -13,5 +13,8 @@ namespace ProductService.Domain.Repositories
         Task<IEnumerable<Product>> GetAllProductsAsync();
         Task<Product?> GetProductByIdAsync(int id);
         Task<IEnumerable<Product>> GetProductsBySourceAsync(string sourceName);
+        Task<Product?> GetProductByUrlAsync(string url);
+
+        Task UpdateProductAsync(Product product);
     }
 }

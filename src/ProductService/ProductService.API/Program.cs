@@ -5,6 +5,7 @@ using ProductService.Domain.Repositories;
 using ProductService.Infrastructure.Data;
 using ProductService.Infrastructure.Messaging;
 using ProductService.Infrastructure.Repositories;
+using ProductService.Infrastructure.Services;
 
 namespace ProductService.API
 {
@@ -23,6 +24,8 @@ namespace ProductService.API
 
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IProductService,ProductService.Infrastructure.Services.ProductService>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
             builder.Services.AddHostedService<ProductCreatedConsumer>();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

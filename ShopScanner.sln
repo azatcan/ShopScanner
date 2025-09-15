@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService.Infrast
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopScanner.Shared", "ShopScanner.Shared\ShopScanner.Shared.csproj", "{794048F2-1F4A-41F2-96F2-F47AD97A1C4B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScraperService.API", "src\ScraperService\ScraperService.API\ScraperService.API.csproj", "{CAFCA4F5-ABB3-4D95-B0EF-E76742315947}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -103,6 +105,10 @@ Global
 		{794048F2-1F4A-41F2-96F2-F47AD97A1C4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{794048F2-1F4A-41F2-96F2-F47AD97A1C4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{794048F2-1F4A-41F2-96F2-F47AD97A1C4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAFCA4F5-ABB3-4D95-B0EF-E76742315947}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAFCA4F5-ABB3-4D95-B0EF-E76742315947}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAFCA4F5-ABB3-4D95-B0EF-E76742315947}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAFCA4F5-ABB3-4D95-B0EF-E76742315947}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -125,6 +131,7 @@ Global
 		{31101AFF-A02E-48C7-8D22-2BF82DE9D3CF} = {A3E16737-AD87-42F1-89CB-16D2AE46F431}
 		{E9055C8C-CB44-4D68-9B54-2A2D07AE9299} = {A3E16737-AD87-42F1-89CB-16D2AE46F431}
 		{794048F2-1F4A-41F2-96F2-F47AD97A1C4B} = {A06EF18C-590B-49F4-957F-BE327BBF9E8E}
+		{CAFCA4F5-ABB3-4D95-B0EF-E76742315947} = {E50810BB-EB27-44BB-8E03-C230B8E7EC37}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7DB20CB7-071E-4D3B-89FB-B1A85E037A3E}

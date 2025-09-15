@@ -49,5 +49,28 @@ namespace ProductService.Infrastructure.Services
             var allProducts = await _repository.GetAllProductsAsync();
             return allProducts.Where(p => p.Price >= min && p.Price <= max);
         }
+
+        public async Task AddOrUpdateProductAsync(Product product)
+        {
+            var existing = await _repository.GetProductByUrlAsync(product.Url);
+
+            if (existing != null)
+            {
+                // Alanları güncelle
+                existing.Name = product.Name;
+                existing.Price = product.Price;
+                existing.ImageUrl = product.ImageUrl;
+                existing.CategoryId = product.CategoryId;
+                existing.Source = product.Source;
+                //existing.UpdatedAt = DateTime.UtcNow; 
+
+                await _repository.UpdateProductAsync(existing);
+            }
+            else
+            {
+                product.CreatedAt = DateTime.UtcNow;
+                await _repository.AddProductAsync(product);
+            }
+        }
     }
 }

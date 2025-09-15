@@ -42,5 +42,16 @@ namespace ProductService.Infrastructure.Repositories
                 .Where(p => p.Source == sourceName)
                 .ToListAsync();
         }
+
+        public async Task<Product?> GetProductByUrlAsync(string url)
+        {
+            return await _context.Products.FirstOrDefaultAsync(p => p.Url == url);
+        }
+
+        public async Task UpdateProductAsync(Product product)
+        {
+            _context.Products.Update(product);
+            await _context.SaveChangesAsync();
+        }
     }
 }
