@@ -46,19 +46,30 @@ namespace ScraperService.Infrastructure.Scriping.Concrete
             await page.GotoAsync(category.Url, new PageGotoOptions { WaitUntil = WaitUntilState.Load, Timeout = 180000 });
             await page.WaitForTimeoutAsync(2500);
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 10; i++)
             {
                 await page.EvaluateAsync("window.scrollBy(0, document.body.scrollHeight)");
-                await page.WaitForTimeoutAsync(1500);
+                await page.WaitForTimeoutAsync(3000);
             }
 
+            await page.WaitForSelectorAsync(productLinkSelector, new PageWaitForSelectorOptions { Timeout = 120000 });
             var productLinks = await page.QuerySelectorAllAsync(productLinkSelector);
-            var productUrls = productLinks
-                .Select(async pl => await pl.GetAttributeAsync("href"))
-                .Select(t => t.Result)
-                .Where(u => !string.IsNullOrEmpty(u))
-                .Select(u => u!.StartsWith("http") ? u : "https://www.hepsiburada.com" + u)
-                .ToList();
+            var productUrls = new List<string>();
+            foreach (var link in productLinks)
+            {
+                var href = await link.GetAttributeAsync("href");
+                if (string.IsNullOrEmpty(href))
+                    continue;
+
+                href = href.Trim();
+
+                if (href.StartsWith("http://") || href.StartsWith("https://"))
+                    productUrls.Add(href);
+                else if (href.StartsWith("//")) 
+                    productUrls.Add("https:" + href);
+                else
+                    productUrls.Add("https://www.hepsiburada.com" + href);
+            }
 
             await page.Context.CloseAsync(); 
 

@@ -12,10 +12,13 @@ namespace ScraperService.Infrastructure.Services
     public class SelectorService : ISelectorService
     {
         private readonly ISiteSelectorRepository _repository;
+        private readonly ICacheService _cache;
+        private const string HashKey = "site_selectors";
 
-        public SelectorService(ISiteSelectorRepository repository)
+        public SelectorService(ISiteSelectorRepository repository, ICacheService cache)
         {
             _repository = repository;
+            _cache = cache;
         }
 
         public async Task AddOrUpdateSelectorAsync(SiteSelector selector)
@@ -31,11 +34,23 @@ namespace ScraperService.Infrastructure.Services
             {
                 await _repository.InsertAsync(selector);
             }
+
+            await _cache.SetHashAsync(HashKey, selector.SiteName, selector, TimeSpan.FromHours(1));
         }
 
         public async Task<SiteSelector?> GetSelectorAsync(string siteName)
         {
-            return await _repository.GetSelectorBySiteAsync(siteName);
+            var cached = await _cache.GetHashAsync<SiteSelector>(HashKey, siteName);
+            if (cached != null)
+                return cached;
+
+            var fromDb = await _repository.GetSelectorBySiteAsync(siteName);
+            if (fromDb != null)
+            {
+                await _cache.SetHashAsync(HashKey, siteName, fromDb, TimeSpan.FromHours(1));
+            }
+
+            return fromDb;
         }
     }
 

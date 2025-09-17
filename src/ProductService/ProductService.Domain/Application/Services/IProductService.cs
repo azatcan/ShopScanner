@@ -1,4 +1,5 @@
-﻿using ProductService.Domain.Entities;
+﻿using ProductService.Domain.Application.DTOs;
+using ProductService.Domain.Entities;
 using ShopScanner.Shared.Dtos;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace ProductService.Domain.Application.Services
         Task<Product?> GetProductByIdAsync(int id);
         Task<IEnumerable<Product>> GetProductsBySourceAsync(string sourceName);
         Task<IEnumerable<Product>> GetProductsByPriceRangeAsync(decimal min, decimal max);
-
+        Task<IEnumerable<ProductIndex>> SearchProductsAsync(string keyword);
         Task AddOrUpdateProductAsync(Product product);
     }
 }

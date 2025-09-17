@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Nest;
+using ProductService.Domain.Application.DTOs;
 using ProductService.Domain.Application.Services;
 using ProductService.Domain.Entities;
 using ProductService.Domain.Repositories;
@@ -14,10 +16,12 @@ namespace ProductService.Infrastructure.Services
     public class ProductService : IProductService
     {
         private readonly IProductRepository _repository;
+        private readonly IElasticClient _elasticClient;
 
-        public ProductService(IProductRepository repository)
+        public ProductService(IProductRepository repository, IElasticClient elasticClient)
         {
             _repository = repository;
+            _elasticClient = elasticClient;
         }
 
         public async Task AddProductAsync(Product product)
@@ -50,13 +54,29 @@ namespace ProductService.Infrastructure.Services
             return allProducts.Where(p => p.Price >= min && p.Price <= max);
         }
 
+        public async Task<IEnumerable<ProductIndex>> SearchProductsAsync(string keyword)
+        {
+            var response = await _elasticClient.SearchAsync<ProductIndex>(s => s
+                .Query(q => q
+                    .MultiMatch(m => m
+                         .Fields(f => f
+                            .Field(p => p.Name)
+                            )
+                        .Query(keyword)
+                        .Fuzziness(Fuzziness.Auto)
+                    )
+                )
+            );
+
+            return response.Documents;
+        }
+
         public async Task AddOrUpdateProductAsync(Product product)
         {
             var existing = await _repository.GetProductByUrlAsync(product.Url);
 
             if (existing != null)
             {
-                // Alanları güncelle
                 existing.Name = product.Name;
                 existing.Price = product.Price;
                 existing.ImageUrl = product.ImageUrl;
@@ -65,11 +85,29 @@ namespace ProductService.Infrastructure.Services
                 //existing.UpdatedAt = DateTime.UtcNow; 
 
                 await _repository.UpdateProductAsync(existing);
+
+                var productIndex = new ProductIndex
+                {
+                    Name = existing.Name,
+                    Price = existing.Price,
+                    Category = existing.Category?.Name, 
+                };
+
+                await _elasticClient.IndexDocumentAsync(productIndex);
             }
             else
             {
                 product.CreatedAt = DateTime.UtcNow;
                 await _repository.AddProductAsync(product);
+
+                var productIndex = new ProductIndex
+                {
+                    Name = product.Name,
+                    Price = product.Price,
+                    Category = product.Category?.Name,
+                };
+
+                await _elasticClient.IndexDocumentAsync(productIndex);
             }
         }
     }

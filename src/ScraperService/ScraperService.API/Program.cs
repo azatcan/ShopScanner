@@ -2,6 +2,8 @@
 using MongoDB.Driver;
 using ScraperService.Domain.Application.Services;
 using ScraperService.Domain.Repositories;
+using ScraperService.Infrastructure.Config;
+using ScraperService.Infrastructure.RedisCache;
 using ScraperService.Infrastructure.Repositories;
 using ScraperService.Infrastructure.Services;
 
@@ -19,6 +21,10 @@ namespace ScraperService.API
                 var connectionString = builder.Configuration.GetConnectionString("MongoDb");
                 return new MongoClient(connectionString);
             });
+
+            builder.Services.Configure<RedisConfig>(builder.Configuration.GetSection("Redis"));
+            builder.Services.AddSingleton<RedisConnection>();
+            builder.Services.AddSingleton<ICacheService, RedisCacheService>();
 
             builder.Services.AddScoped<ISiteSelectorRepository, SiteSelectorRepository>();
             builder.Services.AddScoped<ISelectorService, SelectorService>();

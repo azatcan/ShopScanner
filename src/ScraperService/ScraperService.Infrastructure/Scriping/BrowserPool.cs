@@ -19,8 +19,16 @@ namespace ScraperService.Infrastructure.Scriping
             _playwright = Microsoft.Playwright.Playwright.CreateAsync().GetAwaiter().GetResult();
             _browser = _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
             {
-                Headless = true, 
-                Timeout = 60000
+                Headless = false,
+                Args = new[]
+                    {
+                        "--disable-blink-features=AutomationControlled",
+                        "--no-sandbox",
+                        "--disable-gpu",
+                        "--disable-dev-shm-usage",
+                        "--start-maximized"
+                    },
+                Timeout = 120000
             }).GetAwaiter().GetResult();
         }
 
@@ -29,6 +37,7 @@ namespace ScraperService.Infrastructure.Scriping
             var context = await _browser.NewContextAsync(new BrowserNewContextOptions
             {
                 UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+                ViewportSize = new ViewportSize { Width = 1280, Height = 800 },
                 Locale = "tr-TR"
             });
 

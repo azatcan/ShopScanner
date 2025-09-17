@@ -4,7 +4,9 @@ using ScraperService.Domain.Application.Services;
 using ScraperService.Domain.Messaging;
 using ScraperService.Domain.Repositories;
 using ScraperService.Infrastructure.APIClients;
+using ScraperService.Infrastructure.Config;
 using ScraperService.Infrastructure.Messaging;
+using ScraperService.Infrastructure.RedisCache;
 using ScraperService.Infrastructure.Repositories;
 using ScraperService.Infrastructure.Scriping;
 using ScraperService.Infrastructure.Scriping.Concrete;
@@ -34,6 +36,10 @@ namespace ScraperService.Worker
                          var connectionString = hostContext.Configuration.GetConnectionString("MongoDb");
                          return new MongoClient(connectionString);
                      });
+
+                     services.Configure<RedisConfig>(hostContext.Configuration.GetSection("Redis"));
+                     services.AddSingleton<RedisConnection>();
+                     services.AddSingleton<ICacheService, RedisCacheService>();
 
                      services.AddHttpClient<CategoryApiClient>(client =>
                      {

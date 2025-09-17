@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ProductService.Domain.Application.Services;
 using ProductService.Domain.Repositories;
+using ProductService.Infrastructure.Services;
 using System.Threading.Tasks;
 
 namespace ProductService.API.Controllers
@@ -11,11 +12,13 @@ namespace ProductService.API.Controllers
     public class CategoriesController : ControllerBase
     {
 
-        public readonly ICategoryService _categoryService;
+        private readonly ICategoryService _categoryService;
+        private readonly IProductService _productService;
 
-        public CategoriesController(ICategoryService categoryService)
+        public CategoriesController(ICategoryService categoryService, IProductService productService)
         {
             _categoryService = categoryService;
+            _productService = productService;
         }
 
         [HttpGet("get")]
@@ -23,6 +26,13 @@ namespace ProductService.API.Controllers
         {
             var categories = await _categoryService.GetAllCategoriesAsync();
             return Ok(categories);
+        }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> Search(string keyword)
+        {
+            var results = await _productService.SearchProductsAsync(keyword);
+            return Ok(results);
         }
     }
 }

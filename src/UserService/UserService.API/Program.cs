@@ -1,4 +1,11 @@
 
+using Microsoft.EntityFrameworkCore;
+using UserService.Domain.Repositories;
+using UserService.Domain.Services;
+using UserService.Infrastructure.Data;
+using UserService.Infrastructure.Repositories;
+using UserService.Infrastructure.Services;
+
 namespace UserService.API
 {
     public class Program
@@ -10,6 +17,11 @@ namespace UserService.API
             // Add services to the container.
 
             builder.Services.AddControllers();
+            builder.Services.AddDbContext<DataContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefalutConnection")));
+
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IUserService, UserService.Infrastructure.Services.UserService>();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
