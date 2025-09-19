@@ -31,11 +31,6 @@ namespace UserService.Infrastructure.Repositories
         public async Task<User?> GetByEmailAsync(string email) =>
             await _context.Users.Include(u => u.FavoriteProducts).FirstOrDefaultAsync(u => u.Email == email);
 
-        public async Task AddAsync(User user)
-        {
-            await _context.Users.AddAsync(user);
-        }
-
         public async Task SaveChangesAsync() =>
             await _context.SaveChangesAsync();
     }

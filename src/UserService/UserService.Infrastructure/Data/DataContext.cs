@@ -1,14 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using UserService.Domain.Entities;
 
 namespace UserService.Infrastructure.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<User,AppRole,Guid>
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
@@ -22,8 +18,6 @@ namespace UserService.Infrastructure.Data
                 .HasForeignKey(f => f.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
-
-        public DbSet<User> Users { get; set; }
         public DbSet<FavoriteProduct> FavoriteProducts { get; set; }
     }
 }

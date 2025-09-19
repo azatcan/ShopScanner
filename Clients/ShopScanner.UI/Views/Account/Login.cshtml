@@ -1,0 +1,14 @@
+﻿@using ShopScanner.UI.Model
+@using ShopScanner.UI.Model.LoginModel
+@model LoginViewModel
+
+<form asp-action="Login" method="post">
+    <input asp-for="Email" placeholder="Email" />
+    <input asp-for="Password" placeholder="Password" type="password" />
+    <button type="submit">Login</button>
+</form>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <p style="color:red">Login failed!</p>
+}

@@ -12,7 +12,5 @@ namespace UserService.Domain.Repositories
         Task<IEnumerable<User>> GetAllUsersAsync();
         Task<User?> GetByIdAsync(Guid id);
         Task<User?> GetByEmailAsync(string email);
-        Task AddAsync(User user);
-        Task SaveChangesAsync();
     }
 }
